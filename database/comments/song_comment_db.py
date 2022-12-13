@@ -2,7 +2,7 @@ import pymysql
 import os
 from datetime import datetime
 
-class SongCommentsDB(object):
+class SongCommentDB(object):
 
     def __init__(self):
         pass
@@ -23,15 +23,16 @@ class SongCommentsDB(object):
         return conn
 
     @staticmethod
-    def init_db():
-        conn = SongCommentsDB.get_connection()
-        drop_table_sql = "DROP TABLE IF EXISTS SongComments.comments"
-        drop_db_sql = "DROP DATABASE IF EXISTS SongComments"
-        db_sql = "CREATE DATABASE IF NOT EXISTS SongComments"
-        table_sql = "CREATE TABLE IF NOT EXISTS SongComments.comments(comment_id integer primary key, user_id integer, song_id integer, content varchar(255), date datetime)"  
+    def init_db(reset=False):
+        conn = SongCommentDB.get_connection()
+        drop_table_sql = "DROP TABLE IF EXISTS SongComment.comment"
+        drop_db_sql = "DROP DATABASE IF EXISTS SongComment"
+        db_sql = "CREATE DATABASE IF NOT EXISTS SongComment"
+        table_sql = "CREATE TABLE IF NOT EXISTS SongComment.comment(comment_id integer primary key, user_id integer, song_id integer, content varchar(255), date datetime)"  
         cur = conn.cursor()
-        ret = cur.execute(drop_table_sql)
-        ret = cur.execute(drop_db_sql)
+        if reset:
+            ret = cur.execute(drop_table_sql)
+            ret = cur.execute(drop_db_sql)
         ret = cur.execute(db_sql)
         ret = cur.execute(table_sql)
         return ret
@@ -39,8 +40,8 @@ class SongCommentsDB(object):
     
     @staticmethod
     def get_by_comment_id(id):
-        conn = SongCommentsDB.get_connection()
-        sql = "SELECT * FROM SongComments.comments WHERE comment_id=%s"
+        conn = SongCommentDB.get_connection()
+        sql = "SELECT * FROM SongComment.comment WHERE comment_id=%s"
         cur = conn.cursor()
         cur.execute(sql, args=id)
         res = cur.fetchone()
@@ -57,8 +58,8 @@ class SongCommentsDB(object):
             place_holders.append("%s")
             values.append(v)
         
-        sql = "INSERT INTO SongComments.comments (" + ",".join(cols) + ") VALUES (" + ",".join(place_holders) + ")"
-        conn = SongCommentsDB.get_connection()
+        sql = "INSERT INTO SongComment.comment (" + ",".join(cols) + ") VALUES (" + ",".join(place_holders) + ")"
+        conn = SongCommentDB.get_connection()
         cur = conn.cursor()
         ret = cur.execute(sql, args=values)
 
@@ -66,8 +67,8 @@ class SongCommentsDB(object):
 
     @staticmethod
     def delete_by_comment_id(uid):
-        sql = "DELETE FROM SongComments.comments WHERE comment_id=%s"
-        conn = SongCommentsDB.get_connection()
+        sql = "DELETE FROM SongComment.comment WHERE comment_id=%s"
+        conn = SongCommentDB.get_connection()
         cur = conn.cursor()
         ret = cur.execute(sql, args=uid)
         return ret
@@ -82,8 +83,8 @@ class SongCommentsDB(object):
             values.append(v)
         
         values.append(comment_id)
-        sql = "UPDATE SongComments.comments SET " + ",".join(cols) + " WHERE comment_id=%s"
-        conn = SongCommentsDB.get_connection()
+        sql = "UPDATE SongComment.comment SET " + ",".join(cols) + " WHERE comment_id=%s"
+        conn = SongCommentDB.get_connection()
         cur = conn.cursor()
         ret = cur.execute(sql, args=values)
         return ret
