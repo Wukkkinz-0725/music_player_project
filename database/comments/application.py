@@ -2,6 +2,7 @@ from flask import Flask, Response, request
 from song_comments_db import SongCommentsDB
 import json
 
+
 # Create the Flask application object.
 application = Flask(__name__)
 HOST = '0.0.0.0'
@@ -22,13 +23,12 @@ def get_comment_by_id(cid):
 
 @application.route("/comments/create", methods=["POST"])
 def create_comment():
-    return "create"
-    # content_type = request.headers.get('Content-Type')
-    # if (content_type != 'application/json'):
-    #     return Response('Content-Type Not Supported', status=400, content_type="text/plain")
-    # body = request.json
-    # res = SongCommentsDB.create_comment(body)
-    # return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to create", status=400, content_type="text/plain")
+    content_type = request.headers.get('Content-Type')
+    if (content_type != 'application/json'):
+        return Response('Content-Type Not Supported', status=400, content_type="text/plain")
+    body = request.json
+    res = SongCommentsDB.create_comment(body)
+    return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to create", status=400, content_type="text/plain")
 
 @application.route("/comments/delete/<cid>", methods=["POST"])
 def delete_by_comment_id(cid):

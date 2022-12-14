@@ -35,11 +35,14 @@ class SongCommentsDB(object):
     
     @staticmethod
     def get_by_comment_id(id):
-        conn = SongCommentsDB.get_connection()
-        sql = "SELECT * FROM SongComments.comments WHERE comment_id=%s"
-        cur = conn.cursor()
-        cur.execute(sql, args=id)
-        res = cur.fetchone()
+        try:
+            conn = SongCommentsDB.get_connection()
+            sql = "SELECT * FROM SongComments.comments WHERE comment_id=%s"
+            cur = conn.cursor()
+            cur.execute(sql, args=id)
+            res = cur.fetchone()
+        except e:
+            return e
         return res
 
     @staticmethod
