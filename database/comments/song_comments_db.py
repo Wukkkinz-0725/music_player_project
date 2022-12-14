@@ -12,7 +12,7 @@ class SongCommentsDB(object):
         conn = pymysql.connect(
             user="admin",
             password="dbuserbdbuser",
-            host="e6156-fp-comments.cjmkumdiw0f0.us-east-1.rds.amazonaws.com",
+            host="e61561.cjmkumdiw0f0.us-east-1.rds.amazonaws.com",
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=True
         )
