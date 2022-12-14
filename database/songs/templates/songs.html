@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SONG HOME PAGE</title>
+</head>
+<body>
+
+
+
+<style>
+
+ td {
+        width: 150px;
+        text-align: center;
+        border: 1px solid black;
+        padding: 5px;
+      }
+</style>
+<table>
+  <thead>
+    <tr>
+        <th>Song Id</th>
+        <th>Song Name</th>
+        <th>Album Name</th>
+        <th>Singer</th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for row in data %}
+            <tr>
+                <td>{{row['song_id']}}</td>
+                <td>{{row['song_name']}}</td>
+                <td>{{row['album_name']}}</td>
+                <td>{{row['singer']}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+</body>
+</html>

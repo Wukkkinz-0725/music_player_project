@@ -1,4 +1,4 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request, render_template
 from song_db import SongDB
 import json
 
@@ -9,7 +9,9 @@ PORT = 9001
 
 @song_app.route("/")
 def main():
-    return "Welcome to SongDB"
+    data = SongDB.get_all_songs()
+    return render_template('songs.html', data=data)
+
 
 @song_app.route("/song/query/<cid>", methods=["GET"])
 def get_song_by_id(cid):

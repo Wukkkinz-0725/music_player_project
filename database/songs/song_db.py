@@ -14,8 +14,8 @@ class SongDB(object):
         host = os.environ.get("DBHOST")
 
         conn = pymysql.connect(
-            user=usr,
-            password=pw,
+            user='root',
+            password='dbuserdbuser',
             host=host,
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=True
@@ -37,7 +37,15 @@ class SongDB(object):
         ret = cur.execute(db_sql)
         ret = cur.execute(table_sql)
         return ret
-    
+
+    @staticmethod
+    def get_all_songs():
+        conn = SongDB.get_connection()
+        sql = "SELECT * FROM Song.song_info"
+        cur = conn.cursor()
+        cur.execute(sql)
+        res = cur.fetchall()
+        return res
     
     @staticmethod
     def get_by_song_id(id):
