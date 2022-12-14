@@ -4,7 +4,7 @@ import json
 
 # Create the Flask application object.
 comment_app = Flask(__name__)
-HOST = "localhost"
+HOST = '0.0.0.0'
 PORT = 9001
 
 @comment_app.route("/")

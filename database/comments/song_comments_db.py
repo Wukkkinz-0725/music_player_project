@@ -9,14 +9,10 @@ class SongCommentsDB(object):
 
     @staticmethod
     def get_connection():
-        usr = os.environ.get("DBUSER")
-        pw = os.environ.get("DBPW")
-        host = os.environ.get("DBHOST")
-
         conn = pymysql.connect(
-            user=usr,
-            password=pw,
-            host=host,
+            user="admin",
+            password="dbuserbdbuser",
+            host="e6156-fp-comments.cjmkumdiw0f0.us-east-1.rds.amazonaws.com",
             cursorclass=pymysql.cursors.DictCursor,
             autocommit=True
         )
