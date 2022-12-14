@@ -5,7 +5,7 @@ import json
 # Create the Flask application object.
 application = Flask(__name__)
 HOST = '0.0.0.0'
-PORT = 9001
+PORT = 8000
 
 @application.route("/")
 def main():
@@ -44,5 +44,5 @@ def update_comment(cid):
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to update", status=400, content_type="text/plain")
 
 if __name__ == "__main__":
-    #SongCommentsDB.init_db()
-    application.run(HOST, PORT)
+    SongCommentsDB.init_db()
+    application.run(debug=True, host=HOST, port=PORT)
