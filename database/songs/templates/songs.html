@@ -6,8 +6,6 @@
 </head>
 <body>
 
-
-
 <style>
 
  td {
@@ -33,11 +31,14 @@
                 <td>{{row['song_name']}}</td>
                 <td>{{row['album_name']}}</td>
                 <td>{{row['singer']}}</td>
+                <td><a href=song/detail/{{row['song_id']}}>
+                    <button type=”button”>View Song</button></a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>
 </table>
-
+<a href={{url_for('create_song_webpage')}}><button type=”button”>New Song</button></a>
 
 </body>
 </html>
