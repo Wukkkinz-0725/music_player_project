@@ -31,8 +31,7 @@ class SongCommentsDB(object):
         ret = cur.execute(db_sql)
         ret = cur.execute(table_sql)
         return ret
-    
-    
+
     @staticmethod
     def get_by_comment_id(id):
         conn = SongCommentsDB.get_connection()
@@ -40,6 +39,24 @@ class SongCommentsDB(object):
         cur = conn.cursor()
         cur.execute(sql, args=id)
         res = cur.fetchone()
+        return res
+
+    @staticmethod
+    def get_by_song_id(song_id):
+        conn = SongCommentsDB.get_connection()
+        sql = "SELECT * FROM SongComments.comments WHERE song_id=%s"
+        cur = conn.cursor()
+        cur.execute(sql,args=song_id)
+        res = cur.fetchall()
+        return res
+
+    @staticmethod
+    def get_by_user_id(uid):
+        conn = SongCommentsDB.get_connection()
+        sql = "SELECT * FROM SongComments.comments WHERE user_id=%s"
+        cur = conn.cursor()
+        cur.execute(sql,args=uid)
+        res = cur.fetchall()
         return res
 
     @staticmethod

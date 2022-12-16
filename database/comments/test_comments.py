@@ -10,6 +10,15 @@ requests.post(url, json=data, headers={'Content-Type': 'application/json'})
 # test get_comment
 print(requests.get('http://localhost:9001/comments/query/1').text)
 
+#test get_comment_by_id
+print(requests.get('http://localhost:9001/comments/query_on_cid/1').text)
+
+#test get_comment_by_user_id
+print(requests.get('http://localhost:9001/comments/query_on_uid/101').text)
+
+#test get_comment_by_song_id
+print(requests.get('http://localhost:9001/comments/query_on_sid/112').text)
+
 # test update_comment
 url = 'http://localhost:9001/comments/update/1'
 data = {'user_id':2, 'song_id': 2, 'content': 'hello world 2', 'date':str(datetime.now())}

@@ -1,22 +1,45 @@
-from flask import Flask, Response, request
+from flask import Flask, Response, request,render_template,url_for,flash,redirect
 from song_comments_db import SongCommentsDB
 import json
 
 
 # Create the Flask application object.
 application = Flask(__name__)
-HOST = '0.0.0.0'
-PORT = 8000
+#HOST = '0.0.0.0'
+#PORT = 8000
+HOST = "localhost"
+PORT = 9001
 
 @application.route("/")
 def main():
     return "Welcome to SongCommentsDB"
 
-@application.route("/comments/query/<cid>", methods=["GET"])
+
+@application.route("/comments/query_on_cid/<cid>", methods=["GET"])
 def get_comment_by_id(cid):
     res = SongCommentsDB.get_by_comment_id(cid)
     if res:
         res['date'] = res['date'].strftime('%Y-%m-%d %H:%M:%S')
+        return Response(json.dumps(res), status=200, content_type="application/json")
+    else:
+        return Response("Not Found", status=404, content_type="text/plain")
+
+@application.route("/comments/query_on_uid/<uid>", methods=["GET"])
+def get_comment_by_user_id(uid):
+    res = SongCommentsDB.get_by_user_id(uid)
+    if res:
+        for r in res:
+            r['date'] = r['date'].strftime('%Y-%m-%d %H:%M:%S')
+        return Response(json.dumps(res), status=200, content_type="application/json")
+    else:
+        return Response("Not Found", status=404, content_type="text/plain")
+
+@application.route("/comments/query_on_sid/<sid>", methods=["GET"])
+def get_comment_by_song_id(sid):
+    res = SongCommentsDB.get_by_song_id(sid)
+    if res:
+        for r in res:
+            r['date'] = r['date'].strftime('%Y-%m-%d %H:%M:%S')
         return Response(json.dumps(res), status=200, content_type="application/json")
     else:
         return Response("Not Found", status=404, content_type="text/plain")
