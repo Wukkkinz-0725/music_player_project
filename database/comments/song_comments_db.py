@@ -42,20 +42,22 @@ class SongCommentsDB(object):
         return res
 
     @staticmethod
-    def get_by_song_id(song_id):
+    def get_by_song_id(song_id,limit,offset):
         conn = SongCommentsDB.get_connection()
-        sql = "SELECT * FROM SongComments.comments WHERE song_id=%s"
+        sql = "SELECT * FROM SongComments.comments WHERE song_id=%s LIMIT %s OFFSET %s"
         cur = conn.cursor()
-        cur.execute(sql, args=song_id)
+        args = (song_id,limit,offset)
+        cur.execute(sql, args)
         res = cur.fetchall()
         return res
 
     @staticmethod
-    def get_by_user_id(uid):
+    def get_by_user_id(uid,limit,offset):
         conn = SongCommentsDB.get_connection()
-        sql = "SELECT * FROM SongComments.comments WHERE user_id=%s"
+        sql = "SELECT * FROM SongComments.comments WHERE user_id=%s LIMIT %s OFFSET %s"
         cur = conn.cursor()
-        cur.execute(sql, args=uid)
+        args = (uid,limit,offset)
+        cur.execute(sql, args)
         res = cur.fetchall()
         return res
 

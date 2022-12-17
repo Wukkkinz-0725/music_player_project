@@ -26,7 +26,9 @@ def get_comment_by_id(cid):
 
 @application.route("/comments/query/uid/<uid>", methods=["GET"])
 def get_comment_by_user_id(uid):
-    res = SongCommentsDB.get_by_user_id(uid)
+    offset = request.args.get('offset', 0, type=int)
+    limit = request.args.get('limit', 20, type=int)
+    res = SongCommentsDB.get_by_user_id(uid,limit,offset)
     if res:
         for r in res:
             r['date'] = r['date'].strftime('%Y-%m-%d %H:%M:%S')
@@ -36,7 +38,9 @@ def get_comment_by_user_id(uid):
 
 @application.route("/comments/query/sid/<sid>", methods=["GET"])
 def get_comment_by_song_id(sid):
-    res = SongCommentsDB.get_by_song_id(sid)
+    offset = request.args.get('offset', 0, type=int)
+    limit = request.args.get('limit', 20, type=int)
+    res = SongCommentsDB.get_by_song_id(sid,limit,offset)
     if res:
         for r in res:
             r['date'] = r['date'].strftime('%Y-%m-%d %H:%M:%S')
