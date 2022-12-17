@@ -24,7 +24,7 @@ class SongCommentsDB(object):
         drop_table_sql = "DROP TABLE IF EXISTS SongComments.comments"
         drop_db_sql = "DROP DATABASE IF EXISTS SongComments"
         db_sql = "CREATE DATABASE IF NOT EXISTS SongComments"
-        table_sql = "CREATE TABLE IF NOT EXISTS SongComments.comments(comment_id integer primary key, user_id integer, song_id integer, content varchar(255), date datetime)"  
+        table_sql = "CREATE TABLE IF NOT EXISTS SongComments.comments(comment_id integer AUTO_INCREMENT primary key, user_id integer, song_id integer, content varchar(255), date datetime)"
         cur = conn.cursor()
         ret = cur.execute(drop_table_sql)
         ret = cur.execute(drop_db_sql)
