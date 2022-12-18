@@ -86,7 +86,7 @@ def update_song(sid):
     res = SongsDB.update_song_by_sid(sid, body)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to update", status=400, content_type="text/plain")
 
-@songs_app.route("/songs/query/<sid>", methods=["GET"])
+@songs_app.route("/songs/query/sid/<sid>", methods=["GET"])
 def get_song_by_id(sid):
     res = SongsDB.get_song_by_sid(sid)
     if res:
