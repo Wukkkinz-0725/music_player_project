@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SONG HOME PAGE</title>
+</head>
+<body>
+
+<style>
+
+ td {
+        width: 150px;
+        text-align: center;
+        border: 1px solid black;
+        padding: 5px;
+      }
+</style>
+<table>
+  <thead>
+    <tr>
+        <th>Song Id</th>
+        <th>Song Name</th>
+        <th>Artist</th>
+        <th>Release Date</th>
+    </tr>
+    </thead>
+    <tbody>
+     {% for row in data %}
+            <tr>
+                <td>{{row['song_id']}}</td>
+                <td>{{row['song_name']}}</td>
+                <td>{{row['artist']}}</td>
+                <td>{{row['release_date']}}</td>
+                <td><a href=song/detail/{{row['song_id']}}>
+                    <button type=”button”>View Song</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<a href={{url_for('create_songs_webpage')}}><button type=”button”>New Song</button></a>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detail for song</title>
+</head>
+<body>
+    <table>
+        {% for key, value in data.items() %}
+            <tr>
+               <th> {{ key }} </th>
+               <td> {{ value }} </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <a href={{url_for('edit_song_detail', cid=data['song_id'])}}><button type=”button”>Edit Song</button></a><br>
+    <a href={{url_for('delete_song', cid=data['song_id'])}}><button type=”button”>Delete Song</button></a><br>
+    <a href={{url_for('main')}}><button type=”button”>Return Home</button></a>
+</body>
+</html>
