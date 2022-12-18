@@ -1,6 +1,7 @@
 from flask import Flask, Response, request, render_template, url_for, flash, redirect
 from songs_db import SongsDB
 from flask_cors import CORS
+from datetime import datetime
 import os
 import json
 
@@ -18,12 +19,14 @@ def main():
 @songs_app.route('/songs/detail/<sid>')
 def view_songs_detail(sid):
     data = SongsDB.get_song_by_sid(sid)
-    return render_template('songs_detail.html', data=data)
+    return render_template('song_detail.html', data=data)
 
 @songs_app.route('/songs/new_songs', methods=('GET', 'POST'))
 def create_songs_webpage():
+    print('create song')
     if request.method == 'POST':
-        songs_name = request.form['songs_name']
+        # 在html里点击submit，会通过POST进入这个if statement
+        songs_name = request.form['song_name']
         artist = request.form['artist']
         release_date = request.form['release_date']
         
@@ -34,8 +37,10 @@ def create_songs_webpage():
         elif not artist:
             flash('Artist is required!')
         else:
-            res = SongsDB.create_songs({'songs_name': songs_name, 'artist': artist, 'release_date': release_date})
-            return redirect(url_for('view_songs_detail', sid=res.sid))
+            # 保存歌曲，并显示这首歌的detail
+            res = SongsDB.create_song({'song_name': songs_name, 'artist': artist, 'release_date': release_date})
+            return redirect(url_for('view_songs_detail', sid=res))
+    # 点击create song button后直接渲染html
     return render_template('create_song.html')
 
 @songs_app.route("/songs/create", methods=["POST"])
@@ -49,6 +54,7 @@ def create_song():
 
 @songs_app.route('/songs/delete/<sid>')
 def delete_song(sid):
+    # TODO: delete this function and corresponding button
     delete_song_by_sid(sid)
     return redirect(url_for('main'))
 
@@ -62,7 +68,8 @@ def edit_song_detail(sid):
     data = SongsDB.get_song_by_sid(sid)
 
     if request.method == 'POST':
-        songs_name = request.form['songs_name']
+        # 在html里点击submit，会通过POST进入这个if statement
+        songs_name = request.form['song_name']
         artist = request.form['artist']
         release_date = request.form['release_date']
 
@@ -73,9 +80,11 @@ def edit_song_detail(sid):
         elif not release_date:
             flash('Release Date is required!')
         else:
-            SongsDB.update_song_by_sid(sid, {'songs_name': songs_name, 'artist': artist, 'release_date': release_date})
+            # 保存歌曲，并显示这首歌的detail
+            SongsDB.update_song_by_sid(sid, {'song_name': songs_name, 'artist': artist, 'release_date': release_date})
             return redirect(url_for('view_songs_detail', sid=sid))
-    return render_template('edit_songs_detail.html', data=data)
+    # 点击edit song button后直接渲染html
+    return render_template('edit_song_detail.html', data=data)
 
 @songs_app.route("/songs/update/<sid>", methods=["POST"])
 def update_song(sid):

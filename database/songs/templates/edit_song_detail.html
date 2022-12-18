@@ -5,6 +5,7 @@
     <title>Edit Song</title>
 </head>
 <body>
+    <!--点击submit后，执行 app.py/edit_song_detail()，request.method == 'POST'-->
       <form method="POST">
           <label>Song Name:</label>
           <input type="text" id="song_name" name="song_name" value="{{data['song_name']}}"><br><br>

@@ -13,8 +13,13 @@
             </tr>
         {% endfor %}
     </table>
-    <a href={{url_for('edit_song_detail', cid=data['song_id'])}}><button type=”button”>Edit Song</button></a><br>
-    <a href={{url_for('delete_song', cid=data['song_id'])}}><button type=”button”>Delete Song</button></a><br>
+    <!--edit button, 点击后执行app.py/edit_song_detail() -->
+    <a href={{url_for('edit_song_detail', sid=data['sid'])}}><button type=”button”>Edit Song</button></a><br>
+
+    <!--delete button, 点击后执行app.py/delete_song() -->
+    <a href={{url_for('delete_song', sid=data['sid'])}}><button type=”button”>Delete Song</button></a><br>
+
+    <!--home button, 点击后执行app.py/main() -->
     <a href={{url_for('main')}}><button type=”button”>Return Home</button></a>
 </body>
 </html>
