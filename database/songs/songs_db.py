@@ -77,7 +77,7 @@ class SongsDB(object):
         return res
     
     @staticmethod
-    def get_all_songs(limit, offset):
+    def get_all_songs(limit=20, offset=0):
         conn = SongsDB.get_connection()
         sql = "SELECT * FROM Songs.songs LIMIT %s OFFSET %s"
         args = (limit, offset)
@@ -96,7 +96,7 @@ class SongsDB(object):
         return res
     
     @staticmethod
-    def get_songs_by_song_name(song_name, limit, offset):
+    def get_songs_by_song_name(song_name, limit=20, offset=0):
         conn = SongsDB.get_connection()
         sql = "SELECT * FROM Songs.songs WHERE song_name=%s LIMIT %s OFFSET %s"
         cur = conn.cursor()
