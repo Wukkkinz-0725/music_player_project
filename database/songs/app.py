@@ -1,12 +1,13 @@
 from flask import Flask, Response, request, render_template, url_for, flash, redirect
 from songs_db import SongsDB
+from flask_cors import CORS
+import os
 import json
 
 # Create the Flask application object.
 songs_app = Flask(__name__)
+CORS(songs_app)
 songs_app.config['SECRET_KEY'] = 'whatever'
-HOST = "localhost"
-PORT = 9001
 
 # functions for songs
 @songs_app.route("/")
@@ -123,4 +124,5 @@ def get_all_songs():
 
 if __name__ == "__main__":
     SongsDB.init_db(reset=True)
-    songs_app.run(HOST, PORT)
+    port = int(os.environ.get('PORT', 5000))
+    songs_app.run(host="localhost", port=port)
