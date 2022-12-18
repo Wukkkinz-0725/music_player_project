@@ -6,41 +6,54 @@
 </head>
 <body>
 
-<style>
+    <style>
+     td {
+            width: 150px;
+            text-align: center;
+            border: 1px solid black;
+            padding: 5px;
+          }
+    </style>
 
- td {
-        width: 150px;
-        text-align: center;
-        border: 1px solid black;
-        padding: 5px;
-      }
-</style>
-<table>
-  <thead>
-    <tr>
-        <th>Song Id</th>
-        <th>Song Name</th>
-        <th>Artist</th>
-        <th>Release Date</th>
-    </tr>
-    </thead>
-    <tbody>
-     {% for row in data %}
-            <tr>
-                <td>{{row['sid']}}</td>
-                <td>{{row['song_name']}}</td>
-                <td>{{row['artist']}}</td>
-                <td>{{row['release_date']}}</td>
-                <!--查看歌曲细节, 点击后执行app.py/view_songs_detail() -->
-                <td><a href={{url_for('view_songs_detail', sid=row['sid'])}}>
-                    <button type=”button”>View Song</button></a>
-                </td>
-            </tr>
-        {% endfor %}
-    </tbody>
-</table>
-<!--添加新歌曲, 点击后执行app.py/create_songs_webpage() -->
-<a href={{url_for('create_songs_webpage')}}><button type=”button”>New Song</button></a>
+    <form method="POST">
+        <select name="query_type" id="query_type">
+            <option value="sid">SID</option>
+            <option value="name" selected>Name </option>
+        </select>
+
+        <label>Query:</label>
+        <input type="text" id="query_value" name="query_value">
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <br><br>
+    <table>
+      <thead>
+        <tr>
+            <th>Song Id</th>
+            <th>Song Name</th>
+            <th>Artist</th>
+            <th>Release Date</th>
+        </tr>
+        </thead>
+        <tbody>
+         {% for row in data %}
+                <tr>
+                    <td>{{row['sid']}}</td>
+                    <td>{{row['song_name']}}</td>
+                    <td>{{row['artist']}}</td>
+                    <td>{{row['release_date']}}</td>
+                    <!--查看歌曲细节, 点击后执行app.py/view_songs_detail() -->
+                    <td><a href={{url_for('view_songs_detail', sid=row['sid'])}}>
+                        <button type=”button”>View Song</button></a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!--添加新歌曲, 点击后执行app.py/create_songs_webpage() -->
+    <a href={{url_for('create_songs_webpage')}}><button type=”button”>New Song</button></a>
 
 </body>
 </html>

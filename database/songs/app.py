@@ -11,9 +11,22 @@ CORS(songs_app)
 songs_app.config['SECRET_KEY'] = 'whatever'
 
 # functions for songs
-@songs_app.route("/")
+@songs_app.route("/", methods=('GET', 'POST'))
 def main():
     data = SongsDB.get_all_songs()
+    if request.method == 'POST':
+        # 在html里点击submit，会通过POST进入这个if statement
+        query_type = request.form['query_type']
+        query_value = request.form['query_value']
+        if query_type == 'sid':
+            # TODO: 报错，如果sid错误，sid非integer，考虑把这部分放进api function，目前不考虑错误输入
+            # TODO: 其实这里只需要verify sid，因为打开song detail界面时只用了sid
+            data = json.loads(get_song_by_id(int(query_value)).data)
+            return redirect(url_for('view_songs_detail', sid=int(query_value)))
+        elif query_type == 'name':
+            data = json.loads(get_songs_by_name(query_value).data)[0]
+            print(data)
+            return redirect(url_for('view_songs_detail', sid=data['sid']))
     return render_template('songs.html', data=data)
 
 @songs_app.route('/songs/detail/<sid>')
@@ -23,7 +36,6 @@ def view_songs_detail(sid):
 
 @songs_app.route('/songs/new_songs', methods=('GET', 'POST'))
 def create_songs_webpage():
-    print('create song')
     if request.method == 'POST':
         # 在html里点击submit，会通过POST进入这个if statement
         songs_name = request.form['song_name']
@@ -31,6 +43,7 @@ def create_songs_webpage():
         release_date = request.form['release_date']
         
         if not songs_name:
+            # TODO: flash not working properly
             flash('Song name is required!')
         elif not release_date:
             flash('Release date is required!')
