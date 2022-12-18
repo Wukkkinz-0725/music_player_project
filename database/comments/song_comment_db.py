@@ -1,6 +1,5 @@
 import pymysql
 import os
-from datetime import datetime
 
 class SongCommentDB(object):
 
