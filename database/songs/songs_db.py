@@ -9,10 +9,10 @@ class SongsDB(object):
 
     @staticmethod
     def get_connection():
-        usr = os.environ.get("DBUSER")
-        pw = os.environ.get("DBPW")
-        host = os.environ.get("DBHOST")
-
+        usr = 'admin'
+        pw ="dbuserbdbuser"
+        host = "e61561.cjmkumdiw0f0.us-east-1.rds.amazonaws.com"
+        
         conn = pymysql.connect(
             user=usr,
             password=pw,
