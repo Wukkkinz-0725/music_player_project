@@ -4,7 +4,7 @@ from datetime import datetime
 
 # ## TEST: TABLE [songs]
 
-url = 'http://e61561.cjmkumdiw0f0.us-east-1.rds.amazonaws.com:9001/songs/create'
+url = 'http://localhost:9001/songs/create'
 data = {'song_name':'ABC', 'artist': 'A', 'release_date': str(datetime.now())}
 requests.post(url, json=data, headers={'Content-Type': 'application/json'})
 

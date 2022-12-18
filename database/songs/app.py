@@ -24,19 +24,19 @@ def view_songs_detail(sid):
 def create_songs_webpage():
     if request.method == 'POST':
         songs_name = request.form['songs_name']
-        album_name = request.form['album_name']
         artist = request.form['artist']
+        release_date = request.form['release_date']
         
         if not songs_name:
             flash('Song name is required!')
-        elif not album_name:
-            flash('Album name is required!')
+        elif not release_date:
+            flash('Release date is required!')
         elif not artist:
             flash('Artist is required!')
         else:
-            res = SongsDB.create_songs({'songs_name': songs_name, 'album_name': album_name, 'artist': artist})
+            res = SongsDB.create_songs({'songs_name': songs_name, 'artist': artist, 'release_date': release_date})
             return redirect(url_for('view_songs_detail', sid=res.sid))
-    return render_template('create_songs.html')
+    return render_template('create_song.html')
 
 @songs_app.route("/songs/create", methods=["POST"])
 def create_song():
@@ -62,21 +62,18 @@ def edit_song_detail(sid):
     data = SongsDB.get_song_by_sid(sid)
 
     if request.method == 'POST':
-        sid = request.form['sid']
         songs_name = request.form['songs_name']
-        album_name = request.form['album_name']
         artist = request.form['artist']
+        release_date = request.form['release_date']
 
-        if not sid:
-            flash('Song ID is required!')  # TODO: flash is not working porperly
-        elif not songs_name:
+        if not songs_name:
             flash('Song name is required!')
-        elif not album_name:
-            flash('Album name is required!')
         elif not artist:
             flash('Artist is required!')
+        elif not release_date:
+            flash('Release Date is required!')
         else:
-            SongsDB.update_song_by_sid(sid, {'sid': sid, 'songs_name': songs_name, 'album_name': album_name, 'artist': artist})
+            SongsDB.update_song_by_sid(sid, {'songs_name': songs_name, 'artist': artist, 'release_date': release_date})
             return redirect(url_for('view_songs_detail', sid=sid))
     return render_template('edit_songs_detail.html', data=data)
 
@@ -124,5 +121,5 @@ def get_all_songs():
 
 if __name__ == "__main__":
     SongsDB.init_db(reset=True)
-    port = int(os.environ.get('PORT', 5000))
+    port = int(os.environ.get('PORT', 9001))
     songs_app.run(host="localhost", port=port)
