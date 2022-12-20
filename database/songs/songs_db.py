@@ -50,8 +50,8 @@ class SongsDB(object):
         sql = "INSERT INTO Songs.songs (" + ",".join(cols) + ") VALUES (" + ",".join(place_holders) + ")"
         conn = SongsDB.get_connection()
         cur = conn.cursor()
-        res = cur.execute(sql, args=values)
-        return res
+        cur.execute(sql, args=values)
+        return {"sid": cur.lastrowid, "song_name": dic["song_name"], "artist": dic["artist"], "release_date": dic["release_date"]}
     
     @staticmethod
     def delete_song_by_sid(uid):
@@ -73,8 +73,8 @@ class SongsDB(object):
         sql = "UPDATE Songs.songs SET " + ",".join(cols) + " WHERE sid=%s"
         conn = SongsDB.get_connection()
         cur = conn.cursor()
-        res = cur.execute(sql, args=values)
-        return res
+        cur.execute(sql, args=values)
+        return {"sid": sid}
     
     @staticmethod
     def get_all_songs(limit=20, offset=0):
