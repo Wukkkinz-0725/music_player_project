@@ -63,12 +63,12 @@ def delete_by_cid(cid):
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
 
 @application.route("/comments/delete/sid/<sid>", methods=["POST"])
-def delete_by_cid(sid):
+def delete_by_sid(sid):
     res = SongCommentsDB.delete_by_sid(sid)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
 
 @application.route("/comments/update/cid/<cid>", methods=["POST"])
-def update_comment(cid):
+def update_comment_by_cid(cid):
     content_type = request.headers.get('Content-Type')
     if (content_type != 'application/json'):
         return Response('Content-Type Not Supported', status=400, content_type="text/plain")
@@ -77,7 +77,7 @@ def update_comment(cid):
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to update", status=400, content_type="text/plain")
 
 @application.route("/comments/update/uid/<uid>", methods=["POST"])
-def update_comment(uid):
+def update_comment_by_uid(uid):
     content_type = request.headers.get('Content-Type')
     if (content_type != 'application/json'):
         return Response('Content-Type Not Supported', status=400, content_type="text/plain")

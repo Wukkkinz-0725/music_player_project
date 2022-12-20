@@ -24,7 +24,7 @@ class SongCommentsDB(object):
         drop_table_sql = "DROP TABLE IF EXISTS SongComments.comments"
         drop_db_sql = "DROP DATABASE IF EXISTS SongComments"
         db_sql = "CREATE DATABASE IF NOT EXISTS SongComments"
-        table_sql = "CREATE TABLE IF NOT EXISTS SongComments.comments(cid integer AUTO_INCREMENT primary key, uid integer, sid integer, content varchar(255), date datetime)"
+        table_sql = "CREATE TABLE IF NOT EXISTS SongComments.comments(cid integer AUTO_INCREMENT primary key, uid integer, username varchar(64), sid integer, content varchar(255), date datetime)"
         cur = conn.cursor()
         ret = cur.execute(drop_table_sql)
         ret = cur.execute(drop_db_sql)
@@ -88,7 +88,7 @@ class SongCommentsDB(object):
         return ret
 
     @staticmethod
-    def delete_by_cid(sid):
+    def delete_by_sid(sid):
         sql = "DELETE FROM SongComments.comments WHERE sid=%s"
         conn = SongCommentsDB.get_connection()
         cur = conn.cursor()
