@@ -96,6 +96,14 @@ class SongCommentsDB(object):
         return ret
 
     @staticmethod
+    def delete_by_uid(uid):
+        sql = "DELETE FROM SongComments.comments WHERE uid=%s"
+        conn = SongCommentsDB.get_connection()
+        cur = conn.cursor()
+        ret = cur.execute(sql, args=uid)
+        return ret
+
+    @staticmethod
     def update_by_cid(cid, dic):
         
         cols = []

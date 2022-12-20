@@ -5,10 +5,10 @@ import json
 
 # Create the Flask application object.
 application = Flask(__name__)
-#HOST = '0.0.0.0'
-#PORT = 8000
-HOST = "localhost"
-PORT = 9001
+HOST = '0.0.0.0'
+PORT = 8000
+# HOST = "localhost"
+# PORT = 9001
 
 @application.route("/")
 def main():
@@ -65,6 +65,11 @@ def delete_by_cid(cid):
 @application.route("/comments/delete/sid/<sid>", methods=["POST"])
 def delete_by_sid(sid):
     res = SongCommentsDB.delete_by_sid(sid)
+    return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
+
+@application.route("/comments/delete/uid/<uid>", methods=["POST"])
+def delete_by_uid(uid):
+    res = SongCommentsDB.delete_by_uid(uid)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
 
 @application.route("/comments/update/cid/<cid>", methods=["POST"])
