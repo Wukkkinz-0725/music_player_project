@@ -88,6 +88,14 @@ class SongCommentsDB(object):
         return ret
 
     @staticmethod
+    def delete_by_cid(sid):
+        sql = "DELETE FROM SongComments.comments WHERE sid=%s"
+        conn = SongCommentsDB.get_connection()
+        cur = conn.cursor()
+        ret = cur.execute(sql, args=sid)
+        return ret
+
+    @staticmethod
     def update_by_cid(cid, dic):
         
         cols = []
@@ -98,6 +106,22 @@ class SongCommentsDB(object):
         
         values.append(cid)
         sql = "UPDATE SongComments.comments SET " + ",".join(cols) + " WHERE cid=%s"
+        conn = SongCommentsDB.get_connection()
+        cur = conn.cursor()
+        ret = cur.execute(sql, args=values)
+        return ret
+    
+    @staticmethod
+    def update_by_uid(uid, dic):
+        
+        cols = []
+        values = []
+        for k, v in dic.items():
+            cols.append(k + "=%s")
+            values.append(v)
+        
+        values.append(uid)
+        sql = "UPDATE SongComments.comments SET " + ",".join(cols) + " WHERE uid=%s"
         conn = SongCommentsDB.get_connection()
         cur = conn.cursor()
         ret = cur.execute(sql, args=values)

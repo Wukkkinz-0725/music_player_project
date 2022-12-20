@@ -57,18 +57,32 @@ def create_comment():
     res = SongCommentsDB.create_comment(body)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to create", status=400, content_type="text/plain")
 
-@application.route("/comments/delete/<cid>", methods=["POST"])
+@application.route("/comments/delete/cid/<cid>", methods=["POST"])
 def delete_by_cid(cid):
     res = SongCommentsDB.delete_by_cid(cid)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
-    
-@application.route("/comments/update/<cid>", methods=["POST"])
+
+@application.route("/comments/delete/sid/<sid>", methods=["POST"])
+def delete_by_cid(sid):
+    res = SongCommentsDB.delete_by_sid(sid)
+    return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
+
+@application.route("/comments/update/cid/<cid>", methods=["POST"])
 def update_comment(cid):
     content_type = request.headers.get('Content-Type')
     if (content_type != 'application/json'):
         return Response('Content-Type Not Supported', status=400, content_type="text/plain")
     body = request.json
     res = SongCommentsDB.update_by_cid(cid, body)
+    return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to update", status=400, content_type="text/plain")
+
+@application.route("/comments/update/uid/<uid>", methods=["POST"])
+def update_comment(uid):
+    content_type = request.headers.get('Content-Type')
+    if (content_type != 'application/json'):
+        return Response('Content-Type Not Supported', status=400, content_type="text/plain")
+    body = request.json
+    res = SongCommentsDB.update_by_uid(uid, body)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to update", status=400, content_type="text/plain")
 
 if __name__ == "__main__":
