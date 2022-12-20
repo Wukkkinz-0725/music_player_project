@@ -5,10 +5,10 @@ import json
 
 # Create the Flask application object.
 application = Flask(__name__)
-HOST = '0.0.0.0'
-PORT = 8000
-#HOST = "localhost"
-#PORT = 9001
+#HOST = '0.0.0.0'
+#PORT = 8000
+HOST = "localhost"
+PORT = 9001
 
 @application.route("/")
 def main():
@@ -16,8 +16,8 @@ def main():
 
 
 @application.route("/comments/query/cid/<cid>", methods=["GET"])
-def get_comment_by_id(cid):
-    res = SongCommentsDB.get_by_comment_id(cid)
+def get_comment_by_cid(cid):
+    res = SongCommentsDB.get_by_cid(cid)
     if res:
         res['date'] = res['date'].strftime('%Y-%m-%d %H:%M:%S')
         return Response(json.dumps(res), status=200, content_type="application/json")
@@ -25,10 +25,10 @@ def get_comment_by_id(cid):
         return Response("Not Found", status=404, content_type="text/plain")
 
 @application.route("/comments/query/uid/<uid>", methods=["GET"])
-def get_comment_by_user_id(uid):
+def get_comment_by_uid(uid):
     offset = request.args.get('offset', 0, type=int)
     limit = request.args.get('limit', 20, type=int)
-    res = SongCommentsDB.get_by_user_id(uid,limit,offset)
+    res = SongCommentsDB.get_by_uid(uid,limit,offset)
     if res:
         for r in res:
             r['date'] = r['date'].strftime('%Y-%m-%d %H:%M:%S')
@@ -37,10 +37,10 @@ def get_comment_by_user_id(uid):
         return Response("Not Found", status=404, content_type="text/plain")
 
 @application.route("/comments/query/sid/<sid>", methods=["GET"])
-def get_comment_by_song_id(sid):
+def get_comment_by_sid(sid):
     offset = request.args.get('offset', 0, type=int)
     limit = request.args.get('limit', 20, type=int)
-    res = SongCommentsDB.get_by_song_id(sid,limit,offset)
+    res = SongCommentsDB.get_by_sid(sid,limit,offset)
     if res:
         for r in res:
             r['date'] = r['date'].strftime('%Y-%m-%d %H:%M:%S')
@@ -58,8 +58,8 @@ def create_comment():
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to create", status=400, content_type="text/plain")
 
 @application.route("/comments/delete/<cid>", methods=["POST"])
-def delete_by_comment_id(cid):
-    res = SongCommentsDB.delete_by_comment_id(cid)
+def delete_by_cid(cid):
+    res = SongCommentsDB.delete_by_cid(cid)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to delete", status=400, content_type="text/plain")
     
 @application.route("/comments/update/<cid>", methods=["POST"])
@@ -68,7 +68,7 @@ def update_comment(cid):
     if (content_type != 'application/json'):
         return Response('Content-Type Not Supported', status=400, content_type="text/plain")
     body = request.json
-    res = SongCommentsDB.update_by_comment_id(cid, body)
+    res = SongCommentsDB.update_by_cid(cid, body)
     return Response(json.dumps(res), status=200, content_type="application/json") if res else Response("Fail to update", status=400, content_type="text/plain")
 
 if __name__ == "__main__":
