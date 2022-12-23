@@ -1,69 +1,60 @@
 ## Users API
 
 - Get user by id \
-  GET /v1/users/query/{uid}
+  `GET /users/query/{uid}`
 
 ```
 // return
 {
-    "UID" : "21312412849",
-    "FirstName": "Ming",
-    "LastName" : "Ming",
-    "Sex": "male",
-    "Age": "19",
-    "Description": "A smart student",
-    "Occupation" : "student"
+    "id" : "1",
+    "username": "Charlie",
+    "email": "abcde@columbia.edu",
+    "age": "19",
+    "description": "Welcome to Music Collection"
 }
 ```
 
 - Create user \
-  POST /v1/users/create
-
+  `POST /users/create`
 ```
 // request body
 {
-    "FirstName": "Ming",
-    "LastName" : "Ming",
-    "Sex": "male",
-    "Age": "18",
-    "Description" : "A smart student",
-    "Occupation" : "Student"
+    "username": "Charlie",
+    "email": "abcde@columbia.edu",
+    "age": "19",
+    "description": "Welcome to Music Collection"
 }
-
-// create a uid and store into db
 
 // return 
 {
-    "msg" : "success"
+    "uid" : 1
 }
 ```
 
 - Delete user \
-  POST /v1/users/del/{uid}
+  `POST /users/delele/{uid}`
 
 ```
-// return 
+return 
 {
-    "msg" : "success"
+    "msg" : "Delete Successfully"
 }
 ```
 
 - Update user info \
-  POST /v1/users/update/{uid}
+  POST /users/update/{uid}
 
 ```
-// request body (if empty then don't modify)
+// request body
 {
-    "FirstName": "Ming",
-    "LastName" : "Ming",
-    "Sex": "", 
-    "Age": "18",
-    "Description" : "A smart student",
-    "Occupation" : "Student"
+    "username": "Charlie",
+    "email": "abcde@columbia.edu",
+    "age": "19",
+    "description": "Welcome to Music Collection"
 }
 
 // return
 {
-    "msg" : "success"
+    "msg" : "Update Successfully"
 }
 ```
