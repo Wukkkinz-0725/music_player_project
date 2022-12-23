@@ -1,4 +1,4 @@
-# Basic usage
+# Comments API
 ConnectorX enables you to run the SQL query, load data from databases into a Pandas Dataframe in the fastest and most memory efficient way.
 
 ## API
