@@ -1,5 +1,7 @@
 import pymysql
 import os
+import pandas as pd
+from sqlalchemy import create_engine
 from datetime import datetime
 
 class SongsDB(object):
@@ -23,7 +25,21 @@ class SongsDB(object):
         return conn
 
     @staticmethod
-    def init_db(reset=False):
+    def init_song_data():
+        usr = 'admin'
+        pw ="dbuserbdbuser"
+        host = "e61561.cjmkumdiw0f0.us-east-1.rds.amazonaws.com"
+        init_song = pd.read_csv("Songs.csv", encoding='latin-1')
+        init_song['release_date'] = pd.to_datetime(dict(year=init_song.year, month=init_song.month, day=init_song.day))
+        init_song.columns.values[0] = "song_name"
+        init_song.columns.values[1] = "artist"
+        init_song = init_song.drop(columns=['year', 'month','day'])
+        connection_string = "mysql+pymysql://%s:%s@%s" % (usr, pw, host)
+        engine = create_engine(connection_string)
+        init_song.to_sql('songs', schema="Songs", con=engine, if_exists="append", index=False)
+        
+    @staticmethod
+    def init_db():
         # table info: sid, song_name, artist, release_date
         conn = SongsDB.get_connection()
         drop_table_songs_sql = "DROP TABLE IF EXISTS Songs.songs"
@@ -31,11 +47,11 @@ class SongsDB(object):
         db_sql = "CREATE DATABASE IF NOT EXISTS Songs"
         table_songs_sql = "CREATE TABLE IF NOT EXISTS Songs.songs(sid integer AUTO_INCREMENT primary key, song_name varchar(255), artist varchar(255), release_date Date)"
         cur = conn.cursor()
-        if reset:
-            cur.execute(drop_table_songs_sql)
-            cur.execute(drop_db_sql)
+        cur.execute(drop_table_songs_sql)
+        cur.execute(drop_db_sql)
         cur.execute(db_sql)
         cur.execute(table_songs_sql)
+        SongsDB.init_song_data()
 
     @staticmethod
     def create_song(dic):

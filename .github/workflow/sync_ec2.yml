@@ -1,0 +1,21 @@
+name: Sync with EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Sync with EC2
+        uses: appleboy/scp-action@v1
+        with:
+          host: music_collection_ec2_ip_address
+          username: music_collection_ec2_username
+          identity: private_key_of_project
+          source: .
+          target: /home/music_collection_ec2_username/music_player_project
+          delete: true

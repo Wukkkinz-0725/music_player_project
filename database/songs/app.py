@@ -68,6 +68,5 @@ def get_all_songs():
         return Response("There is no song.", status=400, content_type="text/plain")
 
 if __name__ == "__main__":
-    SongsDB.init_db(reset=True)
-    port = int(os.environ.get('PORT', 9001))
-    songs_app.run(host="localhost", port=port)
+    SongsDB.init_db()
+    songs_app.run(host="0.0.0.0", port=8000, debug=True)
