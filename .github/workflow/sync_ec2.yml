@@ -19,3 +19,5 @@ jobs:
           source: .
           target: /home/music_collection_ec2_username/music_player_project
           delete: true
+
+          

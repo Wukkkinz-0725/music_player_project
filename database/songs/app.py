@@ -69,4 +69,4 @@ def get_all_songs():
 
 if __name__ == "__main__":
     SongsDB.init_db()
-    songs_app.run(host="0.0.0.0", port=8000, debug=True)
+    songs_app.run(host="0.0.0.0", port=8000)
